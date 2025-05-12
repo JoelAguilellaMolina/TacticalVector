@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b44fbfcf0cc07440ac8996ed4f84a53, type: 3}
+  m_Name: Card_+3x
+  m_EditorClassIdentifier: 
+  name: Card_+3x
+  type: var
+  value: 3
+  sprite: {fileID: 21300000, guid: 9d8a4844b607abf4581f914bbe772992, type: 3}
+  convertTo: 
