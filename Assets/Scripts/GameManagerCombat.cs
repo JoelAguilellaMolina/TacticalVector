@@ -2,19 +2,54 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime;
+using TMPro;
 
 public class GameManagerCombat : MonoBehaviour
 {
     public Transform avatarPosition;
+    public Transform ataquePosition;
+    public GameObject VidaValueObjectJugador;
+    public TMP_Text VidaValueJugador;
+    public int VidaJugador;
+    
 
     public Transform posibilityLeftPos;
     public Transform posibilityRightPos;
     public Transform RadioGeneral;
     public Transform temporalPosition;
 
+    public Transform enemigoPosition;
+    public Transform ataqueEnemigoPosition;
+    public GameObject VidaValueObjectE1;
+    public TMP_Text VidaValueE1;
+    public int VidaE1;
+
+    public TMP_Text ProblemTimer;
+    public GameObject aState;
+    public GameObject bState;
+    public GameObject cState;
+    public GameObject dState;
+
+    public Material correct;
+    public Material incorrect;
+    public GameObject Problemas;
+
+
+    public Transform posibilityLeftPosEnemigo1;
+    public Transform posibilityRightPosEnemigo1;
+    public Transform RadioGeneralEnemigo1;
+    public Transform temporalPositionEnemigo1;
+
     public bool isMoving;
     public bool isMovingA;
     public bool isMovingB;
+    public bool isMoveState;
+    public bool isEnemyTurn;
+
+    public bool onProblem;
+    public bool onProblemStart;
+    public bool timeBonus;
 
 
     //public Transform[] PuntosEnFuncion = new Transform[21];
@@ -49,6 +84,8 @@ public class GameManagerCombat : MonoBehaviour
     public Cards[] CartasSeleccionadas = new Cards[7];
 
     public Cards[] Baraja = new Cards[20];
+
+    public Cards[] BarajaEnemigo1 = new Cards[7];
 
     public GameObject Canvas;
 
@@ -113,6 +150,14 @@ public class GameManagerCombat : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        VidaJugador = 20;
+        VidaE1 = 30;
+        VidaValueJugador.text = VidaJugador.ToString();
+        VidaValueE1.text = VidaE1.ToString();
+
+
+        isMoveState = true;
+        isEnemyTurn = false;
 
         eligiendoMovimiento = true;
         temporalPosition.position = new Vector3(0,0,0);
@@ -122,6 +167,10 @@ public class GameManagerCombat : MonoBehaviour
         hayChange = false;
         elegirDireccion = false;
         convertTo = "";
+
+        onProblem = false;
+        onProblemStart = true;
+        timeBonus = true;
 
 
         eligiendoAtaque = false;
@@ -234,10 +283,14 @@ public class GameManagerCombat : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
+        if (!onProblem)      
+        {
+
+        
         if(eligiendoMovimiento)
         {
-            if(!cartasElegidasMovimiento)
+            if(!cartasElegidasMovimiento && !isEnemyTurn)
             {
                 //Para volver a utilizarlas
             if(CartasNoDescartadas.Count < 7)
@@ -335,36 +388,105 @@ public class GameManagerCombat : MonoBehaviour
                     else if (n < -r) n = -r;
                 }
 
-
             }
+
+            if (isEnemyTurn && !cartasElegidasMovimiento)
+                {
+                    print("selección enemigo");
+                    SendFormula.GetComponent<Button>().enabled = false;
+                    CardsPosition.SetActive(false);
+                    SendFormula.SetActive(false);
+
+                    for(int i = 0; i < BarajaEnemigo1.Length; i++)
+                    {
+                        float random = Random.Range(0,2);
+                        print(random);
+                        if(random > 0.5f)
+                        {
+                            print("Entra el random");
+                            if(BarajaEnemigo1[i].type == "change" && !hayChange)
+                            {
+                                hayChange = true;
+                                convertTo = BarajaEnemigo1[i].convertTo;
+                            }
+                            else if(BarajaEnemigo1[i].type == "var")
+                            {
+                                print(BarajaEnemigo1[i].value);
+                                m += BarajaEnemigo1[i].value;
+                            }
+                            else if(BarajaEnemigo1[i].type == "const")
+                            {
+                                n += BarajaEnemigo1[i].value;
+                            }
+                        }
+                    }
+                    
+                    print("m es igual a: " + m);
+                    print("n es igual a: " + n);
+
+                    activarCartas = false;
+                    elegirDireccion = true;
+                    CardsPosition.SetActive(false);
+                    SendFormula.GetComponent<Button>().enabled = true;
+                    SendFormula.SetActive(false);
+                    cartasElegidasMovimiento = true;
+
+                    isMovingA = true;
+                    isMovingB = true;
+
+                    if(n > r) n = r;
+                    else if (n < -r) n = -r;
+                }
 
             if(elegirDireccion)
             {
                 if(convertTo == "log") isMovingA = false;
                 if(isMovingA)
                 {
+                    if(m < 1.5f && m > -1.5f && convertTo != "^2")
+                    x1 = x1 - (VELOCIDAD * 2);
+                    else
                     x1 = x1 - VELOCIDAD;
+
                     if(convertTo == "") y1 = m * x1 + n;
                     if(convertTo == "log") y1 = m * Mathf.Log10(x1) + n;
                     else if(convertTo == "sen") y1 = m * Mathf.Sin(x1) + n;
                     else if(convertTo == "^2") y1 = m * (x1 * x1) + n;
                     
+                    if(!isEnemyTurn)
                     posibilityLeftPos.position = new Vector3(temporalPosition.position.x + x1,VELOCIDAD, temporalPosition.position.z + y1);
+                    else
+                    posibilityLeftPosEnemigo1.position = new Vector3(temporalPositionEnemigo1.position.x + x1,VELOCIDAD, temporalPositionEnemigo1.position.z + y1);
                 }
                 else if(isMovingB)
                 {
+                    if(m < 1.5f && m > -1.5f)
+                    x2 = x2 + (VELOCIDAD * 2);
+                    else
                     x2 = x2 + VELOCIDAD;
+
                     if(convertTo == "") y2 = m * x2 + n;
                     else if(convertTo == "log") y2 = m * Mathf.Log10(x2) + n;
                     else if(convertTo == "sen") y2 = m * Mathf.Sin(x2) + n;
                     else if(convertTo == "^2") y2 = m * (x2 * x2) + n;
                     
+                    if(!isEnemyTurn)
                     posibilityRightPos.position = new Vector3(temporalPosition.position.x + x2,VELOCIDAD,temporalPosition.position.z + y2);
+                    else
+                    posibilityRightPosEnemigo1.position = new Vector3(temporalPositionEnemigo1.position.x + x2,VELOCIDAD,temporalPositionEnemigo1.position.z + y2);
                 }
+
                 else if(!isMovingA && !isMovingB)
                 {
+                    
                     FlechaDer.SetActive(true);
                     if(convertTo != "log") FlechaIzq.SetActive(true);
+
+                    if(isEnemyTurn)
+                    {
+                        if(avatarPosition.position.x < enemigoPosition.position.x && convertTo != "log") FlechaIzq.GetComponent<Button>().enabled = false;
+                        else FlechaDer.GetComponent<Button>().enabled = false;
+                    }
 
                     if (FlechaDer.GetComponent<Button>().enabled == false)
                     {
@@ -405,13 +527,36 @@ public class GameManagerCombat : MonoBehaviour
         {
             if(isMoving)
             {
+                if(m < 1.5f && m > -1.5f)
+                x = x + (direccion) * (VELOCIDAD * 2);
+                else
                 x = x + (direccion) * VELOCIDAD;
+
+
                 if(convertTo == "") y = m * x + n;
                 else if(convertTo == "log") y = m * Mathf.Log10(x) + n;
                 else if(convertTo == "sen") y = m * Mathf.Sin(x) + n;
                 else if(convertTo == "^2") y = m * (x * x) + n;
-                    
+
+                if(!isEnemyTurn)
+                {
+
+                if(isMoveState)    
                 avatarPosition.position = new Vector3(temporalPosition.position.x + x,VELOCIDAD,temporalPosition.position.z + y);
+                else
+                ataquePosition.position = new Vector3(temporalPosition.position.x + x,1,temporalPosition.position.z + y);
+
+                }
+
+                else
+                {
+
+                if(isMoveState)    
+                enemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,VELOCIDAD,temporalPositionEnemigo1.position.z + y);
+                else
+                ataqueEnemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,1,temporalPositionEnemigo1.position.z + y);
+
+                }
             }
             else
             {
@@ -428,11 +573,41 @@ public class GameManagerCombat : MonoBehaviour
 
                 FlechaDer.GetComponent<Button>().enabled = true;
                 FlechaIzq.GetComponent<Button>().enabled = true;
-                
+
+                if(!isEnemyTurn)
+                {
+
                 posibilityLeftPos.position = avatarPosition.position;
                 posibilityRightPos.position = avatarPosition.position;
                 RadioGeneral.position = avatarPosition.position;
                 temporalPosition.position = avatarPosition.position;
+                ataquePosition.position =  new Vector3(avatarPosition.position.x, -1 ,avatarPosition.position.z);
+
+                // Si es el turno finalizando de ataque va al siguiente enemigo
+
+                if(!isMoveState)
+                isEnemyTurn = true;
+
+                }
+                else
+                {
+
+                posibilityLeftPosEnemigo1.position = enemigoPosition.position;
+                posibilityRightPosEnemigo1.position = enemigoPosition.position;
+                RadioGeneralEnemigo1.position = enemigoPosition.position;
+                temporalPositionEnemigo1.position = enemigoPosition.position;
+                ataqueEnemigoPosition.position =  new Vector3(enemigoPosition.position.x, -1 ,enemigoPosition.position.z);
+
+                // Si es el turno finalizando de ataque va al siguiente enemigo
+
+                if(!isMoveState)
+                isEnemyTurn = false;
+
+                }
+                
+
+                if(isMoveState) isMoveState = false;
+                else isMoveState = true;
 
                 m = 0f;
                 n = 0f;
@@ -449,17 +624,102 @@ public class GameManagerCombat : MonoBehaviour
 
         }
 
-        else if (eligiendoAtaque)
-        {
+        
 
         }
 
-        else if (aplicarAtaque)
-
+        else if (onProblem)
         {
+            if(onProblemStart)
+            {
+                timer = 0;
+                onProblemStart = false;
+            }
 
+            if(timer >= 10)
+            {
+                ProblemTimer.text = "10";
+                ProblemTimer.color = Color.red;
+                timeBonus = false;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                ProblemTimer.text = ((int)timer).ToString();
+            }
+
+            if(aState.GetComponent<Button>().enabled == false)
+            {
+                aState.GetComponent<Image>().color = Color.red;
+            }
+            
+            if(cState.GetComponent<Button>().enabled == false)
+            {
+                cState.GetComponent<Image>().color = Color.red;
+            }
+
+            if(dState.GetComponent<Button>().enabled == false)
+            {
+                dState.GetComponent<Image>().color = Color.red;
+            }
+
+            if(bState.GetComponent<Button>().enabled == false)
+            {
+                int damage = 10;
+                if(isEnemyTurn)
+                {
+                    if(timeBonus && aState.GetComponent<Button>().enabled && cState.GetComponent<Button>().enabled && dState.GetComponent<Button>().enabled)
+                    damage = 0;
+                    else
+                    {
+                        if(timeBonus) damage = (int)(damage/2);
+                        if(!aState.GetComponent<Button>().enabled) damage += 2;
+                        if(!cState.GetComponent<Button>().enabled) damage += 2;
+                        if(!dState.GetComponent<Button>().enabled) damage += 2;
+                    }
+                    VidaJugador -= damage;
+                }
+                else
+                {
+                    if(timeBonus && aState.GetComponent<Button>().enabled && bState.GetComponent<Button>().enabled && dState.GetComponent<Button>().enabled)
+                    damage = damage * 2;
+                    else
+                    {
+                        if(timeBonus) damage = (int)(damage * 1.5f);
+                        if(!aState.GetComponent<Button>().enabled) damage -= 3;
+                        if(!cState.GetComponent<Button>().enabled) damage -= 3;
+                        if(!dState.GetComponent<Button>().enabled) damage -= 3;
+                    }
+                    VidaE1 -= damage;
+                }
+
+                onProblemStart = true;
+                timeBonus = true;
+                onProblem = false;
+
+                aState.GetComponent<Image>().color = Color.black;
+                bState.GetComponent<Image>().color = Color.black;
+                cState.GetComponent<Image>().color = Color.black;
+                dState.GetComponent<Image>().color = Color.black;
+                ProblemTimer.color = Color.black;
+
+                aState.GetComponent<Button>().enabled = true;
+                bState.GetComponent<Button>().enabled = true;
+                cState.GetComponent<Button>().enabled = true;
+                dState.GetComponent<Button>().enabled = true;
+
+                VidaValueJugador.text = VidaJugador.ToString();
+                VidaValueE1.text = VidaE1.ToString();
+                VidaValueObjectJugador.SetActive(true);
+                VidaValueObjectE1.SetActive(true);
+                Problemas.SetActive(false);
+
+                
+
+            }
+            
+            
         }
-        timer += Time.deltaTime;
         
         
     }
