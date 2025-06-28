@@ -1,9 +1,11 @@
 using UnityEngine;
+using Unity.Cinemachine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime;
 using TMPro;
+
 
 public class GameManagerCombat : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class GameManagerCombat : MonoBehaviour
     public Transform ataqueEnemigoPosition;
     public GameObject VidaValueObjectE1;
     public TMP_Text VidaValueE1;
+    public TMP_Text actualFormula;
     public int VidaE1;
 
     public TMP_Text ProblemTimer;
@@ -75,7 +78,7 @@ public class GameManagerCombat : MonoBehaviour
 
     public (float,float)[] arrayPositions;
 
-    public const float VELOCIDAD = 0.02f;
+    public float VELOCIDAD;
 
     public Cards[] CartasMano = new Cards[7];
     public List<Cards> CartasNoDescartadas = new List<Cards>();
@@ -93,6 +96,7 @@ public class GameManagerCombat : MonoBehaviour
     public GameObject[] SpriteCards = new GameObject[7];
 
     public GameObject SendFormula;
+    public GameObject ClearTurn;
     public GameObject FlechaDer;
     public GameObject FlechaIzq;
 
@@ -110,6 +114,7 @@ public class GameManagerCombat : MonoBehaviour
     public bool aplicarMovimiento;
     public bool aplicarAtaque;
 
+    public GameObject virtualCamera;
     /*
 
     ECUACIÓN DE LA CIRCUNFERENCIA
@@ -150,6 +155,10 @@ public class GameManagerCombat : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        VELOCIDAD = 2* Time.deltaTime;
+        virtualCamera = GameObject.Find("CinemachineCamera");
+        
         VidaJugador = 20;
         VidaE1 = 30;
         VidaValueJugador.text = VidaJugador.ToString();
@@ -167,6 +176,7 @@ public class GameManagerCombat : MonoBehaviour
         hayChange = false;
         elegirDireccion = false;
         convertTo = "";
+        actualFormula.text = "y = 0x + 0";
 
         onProblem = false;
         onProblemStart = true;
@@ -307,7 +317,11 @@ public class GameManagerCombat : MonoBehaviour
                 int newCard = Random.Range(0,CartasNoDescartadas.Count);
                 CartasMano[i] = CartasNoDescartadas[newCard];
                 CartasNoDescartadas.Remove(CartasNoDescartadas[newCard]);
-                SpriteCards[i].transform.GetChild(0).GetComponent<RawImage>().texture = CartasMano[i].sprite.texture;
+                SpriteCards[i].transform.GetChild(1).GetComponent<RawImage>().texture = CartasMano[i].sprite.texture; //el hijo que no es el fondo de la carta (2do)
+                if(CartasMano[i].type == "const") SpriteCards[i].transform.GetChild(0).GetComponent<RawImage>().color = new Color(1f, 0.827451f, 0.6784314f, 1f);
+                else if(CartasMano[i].type == "var") SpriteCards[i].transform.GetChild(0).GetComponent<RawImage>().color = new Color(0.6254902f, 0.8980392f, 0.8666667f, 1f);
+                else if(CartasMano[i].type == "change") SpriteCards[i].transform.GetChild(0).GetComponent<RawImage>().color = new Color(0.7764706f, 0.6392157f, 0.8588236f, 1f);
+                
                 }
             }
             cartasElegidasMovimiento = true;
@@ -387,12 +401,34 @@ public class GameManagerCombat : MonoBehaviour
                     if(n > r) n = r;
                     else if (n < -r) n = -r;
                 }
+                if (ClearTurn.GetComponent<Button>().enabled == false)
+                {
+                    if(!isEnemyTurn)
+                    {
+
+                    for(int i = 0; i < SpriteCards.Length; i++)
+                    {
+                        if(SpriteCards[i].GetComponent<RawImage>().color == Color.green)
+                        {
+                            SpriteCards[i].GetComponent<RawImage>().color = Color.black;
+                        }
+                    }
+                    m = 0;
+                    n = 0;
+                    aplicarMovimiento = true;
+                    isMoving = false;
+                    eligiendoMovimiento = false;
+                    
+                    }
+                    
+                    ClearTurn.GetComponent<Button>().enabled = true;
+                    ClearTurn.SetActive(true);
+                }
 
             }
 
             if (isEnemyTurn && !cartasElegidasMovimiento)
                 {
-                    print("selección enemigo");
                     SendFormula.GetComponent<Button>().enabled = false;
                     CardsPosition.SetActive(false);
                     SendFormula.SetActive(false);
@@ -400,10 +436,8 @@ public class GameManagerCombat : MonoBehaviour
                     for(int i = 0; i < BarajaEnemigo1.Length; i++)
                     {
                         float random = Random.Range(0,2);
-                        print(random);
                         if(random > 0.5f)
                         {
-                            print("Entra el random");
                             if(BarajaEnemigo1[i].type == "change" && !hayChange)
                             {
                                 hayChange = true;
@@ -411,7 +445,6 @@ public class GameManagerCombat : MonoBehaviour
                             }
                             else if(BarajaEnemigo1[i].type == "var")
                             {
-                                print(BarajaEnemigo1[i].value);
                                 m += BarajaEnemigo1[i].value;
                             }
                             else if(BarajaEnemigo1[i].type == "const")
@@ -420,9 +453,10 @@ public class GameManagerCombat : MonoBehaviour
                             }
                         }
                     }
-                    
-                    print("m es igual a: " + m);
-                    print("n es igual a: " + n);
+
+                    //Se aplica la formula solo una vez de cambio de texto pues ya se ha elegido
+
+                    ActualizarFormulaTexto();
 
                     activarCartas = false;
                     elegirDireccion = true;
@@ -440,7 +474,7 @@ public class GameManagerCombat : MonoBehaviour
 
             if(elegirDireccion)
             {
-                if(convertTo == "log") isMovingA = false;
+                if(convertTo == "log" && m!= 0) isMovingA = false;
                 if(isMovingA)
                 {
                     if(m < 1.5f && m > -1.5f && convertTo != "^2")
@@ -454,9 +488,9 @@ public class GameManagerCombat : MonoBehaviour
                     else if(convertTo == "^2") y1 = m * (x1 * x1) + n;
                     
                     if(!isEnemyTurn)
-                    posibilityLeftPos.position = new Vector3(temporalPosition.position.x + x1,VELOCIDAD, temporalPosition.position.z + y1);
+                    posibilityLeftPos.position = new Vector3(temporalPosition.position.x + x1,1, temporalPosition.position.z + y1);
                     else
-                    posibilityLeftPosEnemigo1.position = new Vector3(temporalPositionEnemigo1.position.x + x1,VELOCIDAD, temporalPositionEnemigo1.position.z + y1);
+                    posibilityLeftPosEnemigo1.position = new Vector3(temporalPositionEnemigo1.position.x + x1,1, temporalPositionEnemigo1.position.z + y1);
                 }
                 else if(isMovingB)
                 {
@@ -471,21 +505,30 @@ public class GameManagerCombat : MonoBehaviour
                     else if(convertTo == "^2") y2 = m * (x2 * x2) + n;
                     
                     if(!isEnemyTurn)
-                    posibilityRightPos.position = new Vector3(temporalPosition.position.x + x2,VELOCIDAD,temporalPosition.position.z + y2);
+                    posibilityRightPos.position = new Vector3(temporalPosition.position.x + x2,1,temporalPosition.position.z + y2);
                     else
-                    posibilityRightPosEnemigo1.position = new Vector3(temporalPositionEnemigo1.position.x + x2,VELOCIDAD,temporalPositionEnemigo1.position.z + y2);
+                    posibilityRightPosEnemigo1.position = new Vector3(temporalPositionEnemigo1.position.x + x2,1,temporalPositionEnemigo1.position.z + y2);
                 }
 
                 else if(!isMovingA && !isMovingB)
                 {
                     
                     FlechaDer.SetActive(true);
-                    if(convertTo != "log") FlechaIzq.SetActive(true);
+                    if(convertTo != "log" || m!= 0) FlechaIzq.SetActive(true);
 
-                    if(isEnemyTurn)
+                    if(isEnemyTurn) // Ia de opciones del enemigo
                     {
-                        if(avatarPosition.position.x < enemigoPosition.position.x && convertTo != "log") FlechaIzq.GetComponent<Button>().enabled = false;
-                        else FlechaDer.GetComponent<Button>().enabled = false;
+                        if(Mathf.Abs(temporalPosition.position.x - (temporalPositionEnemigo1.position.x)) > 15f || Mathf.Abs(temporalPosition.position.y - (temporalPositionEnemigo1.position.y)) < 15f) // si esta muy lejos simplemente coge la que mas se acerca en x
+                        {
+                            if(avatarPosition.position.x < enemigoPosition.position.x && (convertTo != "log" && m!= 0)) FlechaIzq.GetComponent<Button>().enabled = false;
+                            else FlechaDer.GetComponent<Button>().enabled = false;
+                        }
+                        else // si esta cerca busca que posicion le pone más cerca en y de las dos
+                        {
+                            if(Mathf.Abs(posibilityLeftPosEnemigo1.position.y - -(avatarPosition.position.y)) < Mathf.Abs(posibilityRightPosEnemigo1.position.y - -(avatarPosition.position.y)) && (convertTo != "log" && m!= 0)) 
+                            FlechaDer.GetComponent<Button>().enabled = false;
+                            else FlechaIzq.GetComponent<Button>().enabled = false;
+                        }
                     }
 
                     if (FlechaDer.GetComponent<Button>().enabled == false)
@@ -518,8 +561,12 @@ public class GameManagerCombat : MonoBehaviour
                     }
                 }
             }
-
-
+        
+        if(!isEnemyTurn)
+        {
+            ActualizarFormulaTexto();
+        }
+        
         }
 
         else if (aplicarMovimiento)
@@ -544,8 +591,12 @@ public class GameManagerCombat : MonoBehaviour
                 if(isMoveState)    
                 avatarPosition.position = new Vector3(temporalPosition.position.x + x,VELOCIDAD,temporalPosition.position.z + y);
                 else
-                ataquePosition.position = new Vector3(temporalPosition.position.x + x,1,temporalPosition.position.z + y);
+                {
+                    ataquePosition.gameObject.SetActive(true);
+                    ataquePosition.position = new Vector3(temporalPosition.position.x + x,1,temporalPosition.position.z + y);
 
+                }
+                
                 }
 
                 else
@@ -554,7 +605,11 @@ public class GameManagerCombat : MonoBehaviour
                 if(isMoveState)    
                 enemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,VELOCIDAD,temporalPositionEnemigo1.position.z + y);
                 else
-                ataqueEnemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,1,temporalPositionEnemigo1.position.z + y);
+                {
+                    ataqueEnemigoPosition.gameObject.SetActive(true);
+                    ataqueEnemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,1,temporalPositionEnemigo1.position.z + y);
+                }
+                
 
                 }
             }
@@ -579,14 +634,21 @@ public class GameManagerCombat : MonoBehaviour
 
                 posibilityLeftPos.position = avatarPosition.position;
                 posibilityRightPos.position = avatarPosition.position;
-                RadioGeneral.position = avatarPosition.position;
+                RadioGeneral.position = new Vector3(avatarPosition.position.x, VELOCIDAD ,avatarPosition.position.z);
                 temporalPosition.position = avatarPosition.position;
                 ataquePosition.position =  new Vector3(avatarPosition.position.x, -1 ,avatarPosition.position.z);
+                ataquePosition.gameObject.SetActive(false);
 
                 // Si es el turno finalizando de ataque va al siguiente enemigo
 
                 if(!isMoveState)
+                {
+                    
+                virtualCamera.GetComponent<CinemachineCamera>().Follow = enemigoPosition;
+                virtualCamera.GetComponent<CinemachineCamera>().LookAt = enemigoPosition;
                 isEnemyTurn = true;
+                }
+                
 
                 }
                 else
@@ -594,14 +656,21 @@ public class GameManagerCombat : MonoBehaviour
 
                 posibilityLeftPosEnemigo1.position = enemigoPosition.position;
                 posibilityRightPosEnemigo1.position = enemigoPosition.position;
-                RadioGeneralEnemigo1.position = enemigoPosition.position;
+                RadioGeneralEnemigo1.position = new Vector3(enemigoPosition.position.x, VELOCIDAD ,enemigoPosition.position.z);
                 temporalPositionEnemigo1.position = enemigoPosition.position;
                 ataqueEnemigoPosition.position =  new Vector3(enemigoPosition.position.x, -1 ,enemigoPosition.position.z);
+                ataqueEnemigoPosition.gameObject.SetActive(false);
+                
 
                 // Si es el turno finalizando de ataque va al siguiente enemigo
 
                 if(!isMoveState)
+                {
+                virtualCamera.GetComponent<CinemachineCamera>().Follow = avatarPosition;
+                virtualCamera.GetComponent<CinemachineCamera>().LookAt = avatarPosition;
                 isEnemyTurn = false;
+                }
+                
 
                 }
                 
@@ -722,5 +791,33 @@ public class GameManagerCombat : MonoBehaviour
         }
         
         
+    }
+
+    void ActualizarFormulaTexto()
+    {
+        string tempM = m.ToString();
+        string tempN = n.ToString();
+
+        if(m % 1 == Mathf.Abs(0.5f)) tempM = (m * 2).ToString() + "/2";
+        if(m % 1 == Mathf.Abs(0.25f) || m % 1 == Mathf.Abs(0.75f)) tempM = (m * 4).ToString() + "/4";
+        if(n % 1 == Mathf.Abs(0.5f)) tempN = (n * 2).ToString() + "/2";
+        if(n % 1 == Mathf.Abs(0.25f) || n % 1 == Mathf.Abs(0.75f)) tempN = (n * 4).ToString() + "/4";
+
+        if(n < 0) tempN = " - " + tempN.Substring(1,tempN.Length - 1); // quitando el negativo
+        else tempN = " + " + tempN;
+
+        if(m == 1f) tempM = "";
+        if(m == -1f) tempM = "-";
+
+        if(n == 0f && m != 0f) tempN = "";
+        if(m == 0f) 
+        {
+            if(n >= 0f) actualFormula.text = "y = " + tempN.Substring(3,tempN.Length - 3); // quitando el positivo
+            else actualFormula.text = "y = " + tempN;
+        }
+        else if(convertTo == "") actualFormula.text = "y = " + tempM + "x" + tempN;
+        else if(convertTo == "log") actualFormula.text = "y = " + tempM + "log(x)" + tempN;
+        else if(convertTo == "sen") actualFormula.text = "y = " + tempM + "sen(x)" + tempN;
+        else if(convertTo == "^2") actualFormula.text = "y = " + tempM + "x^2" + tempN;
     }
 }
