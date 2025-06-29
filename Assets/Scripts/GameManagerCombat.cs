@@ -54,6 +54,9 @@ public class GameManagerCombat : MonoBehaviour
     public bool onProblemStart;
     public bool timeBonus;
 
+    public bool movingAnim;
+    public bool attackAnim;
+
 
     //public Transform[] PuntosEnFuncion = new Transform[21];
     public int cantidadPuntos;
@@ -294,6 +297,9 @@ public class GameManagerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
+        ActualizarRadioVisual();
+
+
         if (!onProblem)      
         {
 
@@ -588,10 +594,19 @@ public class GameManagerCombat : MonoBehaviour
                 if(!isEnemyTurn)
                 {
 
-                if(isMoveState)    
-                avatarPosition.position = new Vector3(temporalPosition.position.x + x,VELOCIDAD,temporalPosition.position.z + y);
+                if(isMoveState)
+                {
+                    avatarPosition.GetChild(1).GetComponent<Animator>().SetBool("isMoving", true);
+                    avatarPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isMoving", true);
+
+                    avatarPosition.position = new Vector3(temporalPosition.position.x + x,VELOCIDAD,temporalPosition.position.z + y);
+                }    
+                
                 else
                 {
+                    avatarPosition.GetChild(1).GetComponent<Animator>().SetBool("isAttacking", true);
+                    avatarPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isAttacking", true);
+
                     ataquePosition.gameObject.SetActive(true);
                     ataquePosition.position = new Vector3(temporalPosition.position.x + x,1,temporalPosition.position.z + y);
 
@@ -602,10 +617,19 @@ public class GameManagerCombat : MonoBehaviour
                 else
                 {
 
-                if(isMoveState)    
-                enemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,VELOCIDAD,temporalPositionEnemigo1.position.z + y);
+                if(isMoveState)
+                {
+                    enemigoPosition.GetChild(1).GetComponent<Animator>().SetBool("isMoving", true);
+                    enemigoPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isMoving", true);
+
+                    enemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,VELOCIDAD,temporalPositionEnemigo1.position.z + y);
+                }    
+                
                 else
                 {
+                    enemigoPosition.GetChild(1).GetComponent<Animator>().SetBool("isAttacking", true);
+                    enemigoPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isAttacking", true);
+
                     ataqueEnemigoPosition.gameObject.SetActive(true);
                     ataqueEnemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,1,temporalPositionEnemigo1.position.z + y);
                 }
@@ -639,14 +663,26 @@ public class GameManagerCombat : MonoBehaviour
                 ataquePosition.position =  new Vector3(avatarPosition.position.x, -1 ,avatarPosition.position.z);
                 ataquePosition.gameObject.SetActive(false);
 
+                avatarPosition.GetChild(1).GetComponent<Animator>().SetBool("isMoving", false);
+                avatarPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isMoving", false);
+                avatarPosition.GetChild(1).GetComponent<Animator>().SetBool("isAttacking", false);
+                avatarPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isAttacking", false);
+
+                
+
                 // Si es el turno finalizando de ataque va al siguiente enemigo
 
                 if(!isMoveState)
                 {
+                    virtualCamera.GetComponent<CinemachineCamera>().Follow = enemigoPosition;
+                    virtualCamera.GetComponent<CinemachineCamera>().LookAt = enemigoPosition;
+                    isEnemyTurn = true;
                     
-                virtualCamera.GetComponent<CinemachineCamera>().Follow = enemigoPosition;
-                virtualCamera.GetComponent<CinemachineCamera>().LookAt = enemigoPosition;
-                isEnemyTurn = true;
+                    RadioGeneral.GetComponent<Animator>().SetBool("isRadioMov", true);
+                }
+                else
+                {
+                    RadioGeneral.GetComponent<Animator>().SetBool("isRadioMov", false);
                 }
                 
 
@@ -660,6 +696,13 @@ public class GameManagerCombat : MonoBehaviour
                 temporalPositionEnemigo1.position = enemigoPosition.position;
                 ataqueEnemigoPosition.position =  new Vector3(enemigoPosition.position.x, -1 ,enemigoPosition.position.z);
                 ataqueEnemigoPosition.gameObject.SetActive(false);
+
+                enemigoPosition.GetChild(1).GetComponent<Animator>().SetBool("isMoving", false);
+                enemigoPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isMoving", false);
+                enemigoPosition.GetChild(1).GetComponent<Animator>().SetBool("isAttacking", false);
+                enemigoPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isAttacking", false);
+
+                
                 
 
                 // Si es el turno finalizando de ataque va al siguiente enemigo
@@ -669,6 +712,15 @@ public class GameManagerCombat : MonoBehaviour
                 virtualCamera.GetComponent<CinemachineCamera>().Follow = avatarPosition;
                 virtualCamera.GetComponent<CinemachineCamera>().LookAt = avatarPosition;
                 isEnemyTurn = false;
+
+                RadioGeneralEnemigo1.GetComponent<Animator>().SetBool("isRadioMov", true);
+                }
+
+                else
+                {
+                
+                RadioGeneralEnemigo1.GetComponent<Animator>().SetBool("isRadioMov", false);
+
                 }
                 
 
@@ -741,25 +793,42 @@ public class GameManagerCombat : MonoBehaviour
                     damage = 0;
                     else
                     {
-                        if(timeBonus) damage = (int)(damage/2);
-                        if(!aState.GetComponent<Button>().enabled) damage += 2;
-                        if(!cState.GetComponent<Button>().enabled) damage += 2;
-                        if(!dState.GetComponent<Button>().enabled) damage += 2;
+                        timer = 10;
+                        int contIncorrecto = 0;
+                        
+                        if(!aState.GetComponent<Button>().enabled) contIncorrecto +=1;
+                        if(!cState.GetComponent<Button>().enabled) contIncorrecto +=1;
+                        if(!dState.GetComponent<Button>().enabled) contIncorrecto +=1;
+
+                        if(contIncorrecto == 0) damage = (int)(damage/4); //Resistencia del 75%
+                        else if(contIncorrecto == 1) damage = (int)(2 * damage / 3); //Resistencia del 33.333%
+                        else if(contIncorrecto == 2) damage = damage; //Resistencia del 0%
+                        else if(contIncorrecto == 3) damage = (int)(damage * 1.5f); // Resistencia del -50%
+                        else if(contIncorrecto == 4) damage = damage * 2; // Resistencia del -100%
                     }
                     VidaJugador -= damage;
                 }
                 else
                 {
                     if(timeBonus && aState.GetComponent<Button>().enabled && bState.GetComponent<Button>().enabled && dState.GetComponent<Button>().enabled)
-                    damage = damage * 2;
+                    damage = (int)(damage * 1.5f);
                     else
                     {
-                        if(timeBonus) damage = (int)(damage * 1.5f);
-                        if(!aState.GetComponent<Button>().enabled) damage -= 3;
-                        if(!cState.GetComponent<Button>().enabled) damage -= 3;
-                        if(!dState.GetComponent<Button>().enabled) damage -= 3;
+                        timer = 10;
+                        int contIncorrecto = 0;
+                        
+                        if(!aState.GetComponent<Button>().enabled) contIncorrecto +=1;
+                        if(!cState.GetComponent<Button>().enabled) contIncorrecto +=1;
+                        if(!dState.GetComponent<Button>().enabled) contIncorrecto +=1;
+
+                        if(contIncorrecto == 0) damage = damage; // 100% Potencia
+                        else if(contIncorrecto == 1) damage = (int)(damage / 2); // 50% Potencia
+                        else if(contIncorrecto == 2) damage = (int)(damage / 4); // 25 % Potencia
+                        else if(contIncorrecto == 3) damage = (int)(damage / 10); // Resistencia del 10%
+                        else if(contIncorrecto == 4) damage = 0; // 0% Potencia
                     }
                     VidaE1 -= damage;
+
                 }
 
                 onProblemStart = true;
@@ -777,11 +846,30 @@ public class GameManagerCombat : MonoBehaviour
                 cState.GetComponent<Button>().enabled = true;
                 dState.GetComponent<Button>().enabled = true;
 
+                
+
                 VidaValueJugador.text = VidaJugador.ToString();
                 VidaValueE1.text = VidaE1.ToString();
                 VidaValueObjectJugador.SetActive(true);
                 VidaValueObjectE1.SetActive(true);
                 Problemas.SetActive(false);
+
+                int animNum = Random.Range(0,3);
+
+                if(isEnemyTurn)
+                {
+                    VidaValueJugador.transform.GetChild(0).GetComponent<TMP_Text>().text = "-"+ damage.ToString();
+                    VidaValueJugador.transform.GetChild(0).GetComponent<Animator>().SetBool("visibility", true);
+                    VidaValueJugador.transform.GetChild(0).GetComponent<Animator>().SetInteger("animRand", animNum);
+                }
+                else
+                {
+                    VidaValueE1.transform.GetChild(0).GetComponent<TMP_Text>().text = "-"+ damage.ToString();
+                    VidaValueE1.transform.GetChild(0).GetComponent<Animator>().SetBool("visibility", true);
+                    VidaValueE1.transform.GetChild(0).GetComponent<Animator>().SetInteger("animRand", animNum);
+                }
+
+                
 
                 
 
@@ -819,5 +907,16 @@ public class GameManagerCombat : MonoBehaviour
         else if(convertTo == "log") actualFormula.text = "y = " + tempM + "log(x)" + tempN;
         else if(convertTo == "sen") actualFormula.text = "y = " + tempM + "sen(x)" + tempN;
         else if(convertTo == "^2") actualFormula.text = "y = " + tempM + "x^2" + tempN;
+    }
+
+    void ActualizarRadioVisual()
+    {
+        if(!isMoveState && !isEnemyTurn)
+        RadioGeneral.GetComponent<Animator>().SetBool("isRadioMov", false);
+        else RadioGeneral.GetComponent<Animator>().SetBool("isRadioMov", true);
+
+        if(!isMoveState && isEnemyTurn)
+        RadioGeneralEnemigo1.GetComponent<Animator>().SetBool("isRadioMov", false);
+        else RadioGeneralEnemigo1.GetComponent<Animator>().SetBool("isRadioMov", true);
     }
 }

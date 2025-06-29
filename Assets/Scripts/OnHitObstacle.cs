@@ -90,10 +90,12 @@ public class OnHitObstacle : MonoBehaviour
         print(force.z);
         if(force.z > 0 && gm.n > 3)
         {
+            /*
             if(other.gameObject == character) gm.avatarPosition = gm.temporalPosition;
             else if(other.gameObject == character1) gm.enemigoPosition = gm.temporalPositionEnemigo1;
             gm.isMoving = false;
             gm.aplicarMovimiento = true;
+            */
             
         }
         other.gameObject.transform.GetComponent<Rigidbody>().AddForce(force * pushDifference);
