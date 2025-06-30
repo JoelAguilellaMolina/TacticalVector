@@ -159,7 +159,7 @@ public class GameManagerCombat : MonoBehaviour
     void Start()
     {
 
-        VELOCIDAD = 2* Time.deltaTime;
+        VELOCIDAD = 7* Time.deltaTime;
         virtualCamera = GameObject.Find("CinemachineCamera");
         
         VidaJugador = 20;
@@ -294,8 +294,8 @@ public class GameManagerCombat : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    // Utilizado Fixed Update para que se muevan independientemente de los framerates
+    void FixedUpdate()
     { 
         ActualizarRadioVisual();
 
@@ -599,7 +599,7 @@ public class GameManagerCombat : MonoBehaviour
                     avatarPosition.GetChild(1).GetComponent<Animator>().SetBool("isMoving", true);
                     avatarPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isMoving", true);
 
-                    avatarPosition.position = new Vector3(temporalPosition.position.x + x,VELOCIDAD,temporalPosition.position.z + y);
+                    avatarPosition.position = new Vector3(temporalPosition.position.x + x,avatarPosition.position.y,temporalPosition.position.z + y);
                 }    
                 
                 else
@@ -622,7 +622,7 @@ public class GameManagerCombat : MonoBehaviour
                     enemigoPosition.GetChild(1).GetComponent<Animator>().SetBool("isMoving", true);
                     enemigoPosition.GetChild(1).GetChild(7).GetComponent<Animator>().SetBool("isMoving", true);
 
-                    enemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,VELOCIDAD,temporalPositionEnemigo1.position.z + y);
+                    enemigoPosition.position = new Vector3(temporalPositionEnemigo1.position.x + x,enemigoPosition.position.y,temporalPositionEnemigo1.position.z + y);
                 }    
                 
                 else
@@ -658,7 +658,7 @@ public class GameManagerCombat : MonoBehaviour
 
                 posibilityLeftPos.position = avatarPosition.position;
                 posibilityRightPos.position = avatarPosition.position;
-                RadioGeneral.position = new Vector3(avatarPosition.position.x, VELOCIDAD ,avatarPosition.position.z);
+                RadioGeneral.position = new Vector3(avatarPosition.position.x, RadioGeneral.position.y ,avatarPosition.position.z);
                 temporalPosition.position = avatarPosition.position;
                 ataquePosition.position =  new Vector3(avatarPosition.position.x, -1 ,avatarPosition.position.z);
                 ataquePosition.gameObject.SetActive(false);
@@ -692,7 +692,7 @@ public class GameManagerCombat : MonoBehaviour
 
                 posibilityLeftPosEnemigo1.position = enemigoPosition.position;
                 posibilityRightPosEnemigo1.position = enemigoPosition.position;
-                RadioGeneralEnemigo1.position = new Vector3(enemigoPosition.position.x, VELOCIDAD ,enemigoPosition.position.z);
+                RadioGeneralEnemigo1.position = new Vector3(enemigoPosition.position.x, RadioGeneralEnemigo1.position.y ,enemigoPosition.position.z);
                 temporalPositionEnemigo1.position = enemigoPosition.position;
                 ataqueEnemigoPosition.position =  new Vector3(enemigoPosition.position.x, -1 ,enemigoPosition.position.z);
                 ataqueEnemigoPosition.gameObject.SetActive(false);

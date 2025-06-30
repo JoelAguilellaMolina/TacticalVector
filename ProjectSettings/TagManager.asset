@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Radio
+    uniqueID: 3729920005
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

@@ -16,12 +16,12 @@ public class OnHitObstacle : MonoBehaviour
     public GameObject posibilityRight1;
     private const float pushDifference = -500000f;
     private const float secsToWait = 0.1f;
-    public const float VELOCIDAD = 0.02f;
+    public float VELOCIDAD;
 
 
     void Start()
     {
-        
+        VELOCIDAD = gameManagerCombat.GetComponent<GameManagerCombat>().VELOCIDAD;
     }
 
     void OnTriggerEnter(Collider other)
@@ -110,7 +110,7 @@ public class OnHitObstacle : MonoBehaviour
         {
             gm.posibilityLeftPos.position = gm.avatarPosition.position;
             gm.posibilityRightPos.position = gm.avatarPosition.position;
-            gm.RadioGeneral.position = new Vector3(gm.avatarPosition.position.x, VELOCIDAD ,gm.avatarPosition.position.z);
+            gm.RadioGeneral.position = new Vector3(gm.avatarPosition.position.x, gm.RadioGeneral.position.y ,gm.avatarPosition.position.z);
             gm.temporalPosition.position = gm.avatarPosition.position;
             gm.ataquePosition.position =  new Vector3(gm.avatarPosition.position.x, -1 ,gm.avatarPosition.position.z);
         }
@@ -119,7 +119,7 @@ public class OnHitObstacle : MonoBehaviour
         {
             gm.posibilityLeftPosEnemigo1.position = gm.enemigoPosition.position;
             gm.posibilityRightPosEnemigo1.position = gm.enemigoPosition.position;
-            gm.RadioGeneralEnemigo1.position = new Vector3(gm.enemigoPosition.position.x, VELOCIDAD ,gm.enemigoPosition.position.z);
+            gm.RadioGeneralEnemigo1.position = new Vector3(gm.enemigoPosition.position.x, gm.RadioGeneralEnemigo1.position.y ,gm.enemigoPosition.position.z);
             gm.temporalPositionEnemigo1.position = gm.enemigoPosition.position;
             gm.ataqueEnemigoPosition.position =  new Vector3(gm.enemigoPosition.position.x, -1 ,gm.enemigoPosition.position.z);
         }
