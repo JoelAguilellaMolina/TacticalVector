@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
-  m_Name: A_1-3
+  m_Name: A1-2
   m_EditorClassIdentifier: 
-  enunciado: "\xBF38/4?"
-  spriteApoyo: {fileID: 21300000, guid: c81313891cf6cd24f84ffed80f6f5213, type: 3}
-  baseDamage: 15
+  enunciado: "\xBF2x7?"
+  spriteApoyo: {fileID: 21300000, guid: 7bb10d9f8866df14c8996cfd8bb3f7f1, type: 3}
+  baseDamage: 10
   maxTimeBonus: 600
-  a: a) 9
-  b: b) 11.5
-  c: c) 19/2
-  d: d) 16/2
-  e: e) 74/8
-  solucion: c
-  pista: "Pista: El valor no es entero, simplif\xEDcalo."
+  a: a) 1
+  b: b) 20
+  c: c) 12
+  d: d) 9
+  e: e) 14
+  solucion: e
+  pista: "Pista: \xA1Multiplicaci\xF3n sencilla!"
