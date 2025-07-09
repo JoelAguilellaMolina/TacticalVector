@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: C2-1
+  m_EditorClassIdentifier: 
+  enunciado: "Selecciona el n<size=85%>\xFA</size>mero entero que NO es m<size=85%>\xFA</size>ltiplo
+    de 7"
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 20
+  maxTimeBonus: 100
+  a: a) 49
+  b: b) 210
+  c: c) 118
+  d: d) 343
+  e: e) 161
+  solucion: c
+  pista: "Pista: Resta el doble de la <size=85%>\xFA</size>ltima cifra del n<size=85%>\xFA</size>mero
+    al n<size=85%>\xFA</size>mero formado por las cifras restantes. Si el resultado
+    es 0 o un m<size=85%>\xFA</size>ltiplo de 7, entonces el n<size=85%>\xFA</size>mero
+    original es divisible entre 7. "

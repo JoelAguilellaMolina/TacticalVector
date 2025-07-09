@@ -18283,7 +18283,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "- Enemigos: 2\n- Tem\xE1tica: \nPolinomios, Potencias y ra\xEDces.\n-
-    Espacio: Afueras.\n- Recompensas: +x, -6, -3/2x, +5"
+    Espacio: Afueras.\n- Recompensas: +x, -6, -5/4x, +5"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d20cb33e089552742b46009408a3b3e9, type: 2}
   m_sharedMaterial: {fileID: -5205968640431874461, guid: d20cb33e089552742b46009408a3b3e9, type: 2}
@@ -31607,7 +31607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209090844756447580, guid: 74b286ad53d651a489b17b5fe26ade2e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

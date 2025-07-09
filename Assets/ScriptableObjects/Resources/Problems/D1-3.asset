@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: D1-3
+  m_EditorClassIdentifier: 
+  enunciado: "Selecciona la definici<size=85%>\xF3</size>n de proporcionalidad inversa
+    entre dos variables correcta."
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 25
+  maxTimeBonus: 25
+  a: a) Al aumentar una, la otra se mantiene constante.
+  b: b) Al aumentar una, disminuye la otra, sin viceversa.
+  c: c) Al aumentar una, aumenta la otra, sin viceversa.
+  d: d) Al aumentar una, disminuye la otra, y viceversa.
+  e: e) Al aumentar una, aumenta la otra, y viceversa.
+  solucion: d
+  pista: "Pista: Piensa como act<size=85%>\xFA</size>an los valores en las tablas
+    de proporcionalidad inversa."

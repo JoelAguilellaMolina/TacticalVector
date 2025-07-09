@@ -268,9 +268,6 @@ public class GameManagerCombat : MonoBehaviour
         Shuffle(ProblemasEnemigo2);
         Shuffle(ProblemasEnemigo3);
 
-        virtualCamera.GetComponent<CinemachineCamera>().Follow = avatarPosition;
-        virtualCamera.GetComponent<CinemachineCamera>().LookAt = avatarPosition;
-
         virtualCamera.GetComponent<CinemachineCamera>().Follow = null;
         virtualCamera.GetComponent<CinemachineCamera>().LookAt = null;
 
@@ -285,7 +282,7 @@ public class GameManagerCombat : MonoBehaviour
         enemyHit = 0;
         secondsToUnselect = 1;
 
-        VELOCIDAD = 7 * Time.fixedDeltaTime;
+        VELOCIDAD = 5 * Time.fixedDeltaTime;
 
         //virtualCamera = GameObject.Find("CinemachineCamera");
 

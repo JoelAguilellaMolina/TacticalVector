@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
-  m_Name: B1-1
+  m_Name: B2-2
   m_EditorClassIdentifier: 
-  enunciado: "Simplifica la siguiente expresi<size=85%>\xF3</size>n: \\r\\n -2x^3
-    - x^2 + 5x^2 - 6x + x - 2x^2 - 6x"
+  enunciado: 'Calcula esta potencia: (8/5)^(-4)'
   spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
   baseDamage: 10
-  maxTimeBonus: 60
-  a: a) x^3 + 2x^2 - 11
-  b: b) -2x^3 + 2x^2 - 11x
-  c: c) -4x^3 + 2x^2 + 7x
-  d: d) -x^3 + 4x^2 - 12x
-  e: e) x(-2x^2 -2x - 11)
-  solucion: b
-  pista: "Pista: \xA1Recuerda que se suman y restan las x con misma potencia!"
+  maxTimeBonus: 90
+  a: a) 625/4094
+  b: b) 5^(-4)/8^(-4)
+  c: c) 8^(-4)/5^4
+  d: d) 625/4096
+  e: e) 5^4/8^(-4)
+  solucion: d
+  pista: "Pista: \xA1Exponentes negativos pasan numeros de numerador a denominador
+    y viceversa!"
