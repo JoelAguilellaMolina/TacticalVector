@@ -22,8 +22,13 @@ public class OnHitColliderRadius : MonoBehaviour
         else if(other.gameObject == posibilityLeft) 
         {
             gameManagerCombat.GetComponent<GameManagerCombat>().isMovingA = false;
+            posibilityLeft.GetComponent<TrailRenderer>().emitting = false;
         }
-        else if(other.gameObject == posibilityRight) gameManagerCombat.GetComponent<GameManagerCombat>().isMovingB = false;
+        else if(other.gameObject == posibilityRight) 
+        {
+            gameManagerCombat.GetComponent<GameManagerCombat>().isMovingB = false;
+            posibilityRight.GetComponent<TrailRenderer>().emitting = false;
+        }
     }
 
     void OnTriggerStay(Collider other)

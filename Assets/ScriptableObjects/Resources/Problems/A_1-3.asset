@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: A_1-3
+  m_EditorClassIdentifier: 
+  enunciado: "\xBF38/4?"
+  spriteApoyo: {fileID: 21300000, guid: c81313891cf6cd24f84ffed80f6f5213, type: 3}
+  baseDamage: 15
+  maxTimeBonus: 600
+  a: a) 9
+  b: b) 11.5
+  c: c) 19/2
+  d: d) 16/2
+  e: e) 74/8
+  solucion: c
+  pista: "Pista: El valor no es entero, simplif\xEDcalo."
