@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: J1-3
+  m_EditorClassIdentifier: 
+  enunciado: "\xBFCu<size=85%>\xE1</size>ntas soluciones tiene este sistema? \\r\\n
+    4x - 3y = 5 \\r\\n 8x - 6y = 10"
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 20
+  maxTimeBonus: 45
+  a: a) una
+  b: b) dos
+  c: c) ninguna
+  d: d) infinitas
+  e: e) cuatro
+  solucion: d
+  pista: "Pista: Recuerda que \"ninguna\" se refiere a ninguna soluci<size=85%>\xF3</size>n
+    real."

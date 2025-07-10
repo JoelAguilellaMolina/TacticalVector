@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: K3-2
+  m_EditorClassIdentifier: 
+  enunciado: "Se lanzan 4 monedas iguales.\xBFCu<size=85%>\xE1</size>l es la probabilidad
+    de obtener, al menos, 3 cruces?"
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 35
+  maxTimeBonus: 80
+  a: a) 1/8
+  b: b) 5/12
+  c: c) 3/4
+  d: d) 5/16
+  e: e) 6/11
+  solucion: d
+  pista: "Pista: Ten todas las posibilidades escritas a tu disposici<size=85%>\xF3</size>n
+    ayuda mucho."

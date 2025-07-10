@@ -219,6 +219,10 @@ public class GameManagerCombat : MonoBehaviour
     public bool tutorialStep4;
     public bool tutorialStep5;
 
+    [Header("Musica")]
+    
+    public Transform MusicSource;
+
     [Header("DontDestroyComponents")]
 
     public DataSave dataSave;
@@ -282,8 +286,9 @@ public class GameManagerCombat : MonoBehaviour
         enemyHit = 0;
         secondsToUnselect = 1;
 
-        VELOCIDAD = 5 * Time.fixedDeltaTime;
+        VELOCIDAD = 6 * Time.fixedDeltaTime;
 
+        
         //virtualCamera = GameObject.Find("CinemachineCamera");
 
         /*
@@ -303,8 +308,10 @@ public class GameManagerCombat : MonoBehaviour
         if(dataSave.boostRadio)
         {
             RadioGeneral.localScale = new Vector3(1.5f,1.5f,1f);
-            RadioGeneral.GetComponent<SphereCollider>().radius = 14.55f;
+            //RadioGeneral.GetComponent<SphereCollider>().radius = 14.55f;
             r = 15f;
+            FlechaDer.transform.localScale = FlechaDer.transform.localScale;
+            FlechaIzq.transform.localScale = FlechaIzq.transform.localScale;
         }
         else r = 10f;
         if(dataSave.boostVida)
@@ -454,6 +461,8 @@ public class GameManagerCombat : MonoBehaviour
     // Utilizado Fixed Update para que se muevan independientemente de los framerates
     void FixedUpdate()
     {
+        if(!onProblem) MusicSource.GetChild(1).GetComponent<AudioSource>().Pause();
+
         
         if(VidaJugador <= 0)
         {
@@ -486,11 +495,20 @@ public class GameManagerCombat : MonoBehaviour
                 else if(DropsPosibles[iDropRandom].type == "var") CartaConseguida.GetChild(0).GetComponent<RawImage>().color = new Color(0.6254902f, 0.8980392f, 0.8666667f, 1f); //Color Para var
                 else if(DropsPosibles[iDropRandom].type == "change") CartaConseguida.GetChild(0).GetComponent<RawImage>().color = new Color(0.7764706f, 0.6392157f, 0.8588236f, 1f); //Color Para change
                 }
-
                 
             }
             if(!Finalizado.GetChild(1).GetChild(0).GetChild(0).GetComponent<Button>().enabled)
             {
+                if(isDropRango)
+                {
+                    dataSave.boostRadio = true;
+                }
+                else if(isDropVida)
+                {
+                    dataSave.boostVida = true;
+                }
+
+
                 for(int i = 0; i < dataSave.nivelesCompletados.Length; i++)
                 {
                     if(SceneManager.GetActiveScene().name == "Nivel" + (i+1).ToString()) dataSave.nivelesCompletados[i] = true;
@@ -1344,6 +1362,8 @@ public class GameManagerCombat : MonoBehaviour
 
             if(onProblemStart)
             {
+                MusicSource.GetChild(0).GetComponent<AudioSource>().Pause();
+                MusicSource.GetChild(1).GetComponent<AudioSource>().UnPause();
                 if(enemyHit == 1) 
                 {
                     actualProblem = ProblemasEnemigo1[indiceProblema1];
@@ -1565,6 +1585,9 @@ public class GameManagerCombat : MonoBehaviour
                 onProblemStart = true;
                 onProblem = false;
                 isAnimationFinished = false;
+
+                MusicSource.GetChild(1).GetComponent<AudioSource>().Pause();
+                MusicSource.GetChild(0).GetComponent<AudioSource>().UnPause();
 
                 pistaUsada = false;
                 Problema.GetChild(6).Find("BotonPista").gameObject.SetActive(true);

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: L1-3
+  m_EditorClassIdentifier: 
+  enunciado: "Los siguientes datos: 10, 17, a, 19, 21, b, 25 tienen como media, mediana
+    y moda 19. \xBFCu<size=85%>\xE1</size>nto valen a y b?"
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 50
+  maxTimeBonus: 120
+  a: a) a=19, b= 21
+  b: b) a=12, b= 25
+  c: c) a=19, b= 22
+  d: d) a=18, b= 19
+  e: e) a=17, b= 23
+  solucion: c
+  pista: "Pista: \xBFC<size=85%>\xF3</size>mo se sabe la moda si s<size=85%>\xF3</size>lo
+    un valor se repite?"

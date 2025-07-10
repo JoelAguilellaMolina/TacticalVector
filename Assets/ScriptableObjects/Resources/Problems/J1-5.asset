@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: J1-5
+  m_EditorClassIdentifier: 
+  enunciado: "Selecciona el sistema que ense<size=85%>\xF1</size>a esta figura:"
+  spriteApoyo: {fileID: 21300000, guid: c061a10d88df50040bb0125a59843f81, type: 3}
+  baseDamage: 45
+  maxTimeBonus: 180
+  a: a) 4x-y=4 \r\n x =-2
+  b: b) 3x+2y=6 \r\n 2x-2y=-5
+  c: c) x+2y=6 \r\n x-2y=-2
+  d: d) x+y=0 \r\n x-y =-2
+  e: e) 2x+2y=6 \r\n x-2y= 2
+  solucion: d
+  pista: "Pista: Despejar y en cada ecuaci<size=85%>\xF3</size>n te ayudar\xE1 a
+    visualizar cada funci<size=85%>\xF3</size>n."

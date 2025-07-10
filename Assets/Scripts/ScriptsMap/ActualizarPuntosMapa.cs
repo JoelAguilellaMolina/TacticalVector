@@ -8,6 +8,7 @@ public class ActualizarPuntosMapa : MonoBehaviour
     public Transform NivelesPuntos;
     public Transform DescripcionesNiveles;
     public GameObject TodoOscuro;
+    public GameObject Trofeo;
     public bool[] nivelesCompletados;
     public bool[] nivelesActivos;
     public DataSave dataSave;
@@ -16,10 +17,13 @@ public class ActualizarPuntosMapa : MonoBehaviour
     {
         dataSave = GameObject.Find("DataSave").GetComponent<DataSave>();
         nivelesCompletados = dataSave.nivelesCompletados;
+        int nivelesHechos = 0;
         for(int i = 0; i < nivelesCompletados.Length; i++)
         {
+            
             if(nivelesCompletados[i] == true)
             {
+                nivelesHechos++;
                 NivelesPuntos.GetChild(i).GetChild(0).GetComponent<Image>().color = new Color32(0,185,0,255);
                 if(i == 0)
                 {
@@ -109,7 +113,7 @@ public class ActualizarPuntosMapa : MonoBehaviour
                 }
                 else if(i == 10)
                 {
-                    nivelesActivos[9] = true;
+                    nivelesActivos[11] = true;
 
                     Vectores.Find("KL").GetChild(0).gameObject.SetActive(true);
                     Vectores.Find("KL").GetChild(1).gameObject.SetActive(true);
@@ -117,6 +121,8 @@ public class ActualizarPuntosMapa : MonoBehaviour
                 }
             }
         }
+
+        if(nivelesHechos == nivelesCompletados.Length) Trofeo.SetActive(true);
 
         for(int i = 0; i < nivelesActivos.Length; i++)
         {
