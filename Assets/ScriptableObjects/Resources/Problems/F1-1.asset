@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: F1-1
+  m_EditorClassIdentifier: 
+  enunciado: "Elige la opci<size=85%>\xF3</size>n que determinen los lados de un
+    tri<size=85%>\xE1</size>ngulo rect<size=85%>\xE1</size>ngulo."
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 30
+  maxTimeBonus: 120
+  a: a) 4cm, 7cm y 6cm
+  b: b) 10 cm, 8 cm y 6 cm
+  c: c) 8 cm, 5 cm y 4 cm
+  d: d) 12,5 cm, 6,25 cm y 5 cm
+  e: e) 10cm, 7cm y 5cm
+  solucion: b
+  pista: "Pista: Teorema de Pit<size=85%>\xE1</size>goras."

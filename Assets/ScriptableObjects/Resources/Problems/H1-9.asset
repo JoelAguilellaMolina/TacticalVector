@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: H1-9
+  m_EditorClassIdentifier: 
+  enunciado: "Halla la mitad del <size=85%>\xE1</size>rea de la figura"
+  spriteApoyo: {fileID: 21300000, guid: 3b563156f5c2d7346ad5e263790bdaa4, type: 3}
+  baseDamage: 40
+  maxTimeBonus: 75
+  a: a) 49 cm^2
+  b: b) 52 cm^2
+  c: c) 98 cm^2
+  d: d) 44 cm^2
+  e: e) 50 cm^2
+  solucion: a
+  pista: 'Pista: Nula...'

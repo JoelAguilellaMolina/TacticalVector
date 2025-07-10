@@ -475,7 +475,7 @@ public class GameManagerCombat : MonoBehaviour
                 Finalizado.gameObject.SetActive(true);
                 Finalizado.GetChild(2).gameObject.SetActive(true);
 
-                if(!isDropRango && !isDropVida)
+                if(!isDropRango && !isDropVida && DropsPosibles.Count > 0)
                 {
                 int iDropRandom = Random.Range(0,DropsPosibles.Count);
 

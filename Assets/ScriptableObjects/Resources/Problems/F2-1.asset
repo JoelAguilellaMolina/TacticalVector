@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: F2-1
+  m_EditorClassIdentifier: 
+  enunciado: "Halla el <size=85%>\xE1</size>rea de un prisma triangular, es decir,
+    la base es un tri<size=85%>\xE1</size>ngulo equil<size=85%>\xE1</size>tero, regular,
+    de arista b<size=85%>\xE1</size>sica 5 cm y 16,5 cm de altura."
+  spriteApoyo: {fileID: 21300000, guid: 38e8cec3a6af60e42b99e3cecf32db73, type: 3}
+  baseDamage: 35
+  maxTimeBonus: 240
+  a: a) 309,6 cm^2
+  b: b) 216 cm^2
+  c: c) 480 cm^2
+  d: d) 269,1 cm^2
+  e: e) 125,6 cm^2
+  solucion: d
+  pista: "Pista: Calcula por partes el <size=85%>\xE1</size>rea de la base y luego
+    el <size=85%>\xE1</size>rea lateral."

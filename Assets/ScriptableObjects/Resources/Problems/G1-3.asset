@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: G1-3
+  m_EditorClassIdentifier: 
+  enunciado: "Determina el dominio y el recorrido de la siguiente funci<size=85%>\xF3</size>n"
+  spriteApoyo: {fileID: 21300000, guid: e248fecc0c9756a4b8769ef65931e47d, type: 3}
+  baseDamage: 40
+  maxTimeBonus: 80
+  a: "a) Dom = [\u22121, 1] + [2, 5] + [6, 8], Rec = [0, 3] + {5}"
+  b: "b) Dom = [\u22121, -1] + [3, 5] + [6, 8], Rec = [0, 3] + {5}"
+  c: "c) Dom = [\u22121, 1] + [2, 5] + [6, 8], Rec = [1, 3] + {5}"
+  d: "d) Dom = [\u22121, -1] + [3, 5] + [6, 8],  Rec = [1, 3] + {5}"
+  e: e) Dom = [0, 1] + [2, 4] + [6, 8], Rec = [1, 3] + {6}
+  solucion: a
+  pista: 'Pista: para el dominio revisa su existencia en x, para el recorrido en
+    y'

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: G1-2
+  m_EditorClassIdentifier: 
+  enunciado: "La funci\xF3n y = x2 \u2212 5x + 6, \xBFen qu\xE9 puntos corta a los
+    ejes?"
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 40
+  maxTimeBonus: 120
+  a: a) (3, 0)
+  b: b) (2, 0).
+  c: c) (3, 0) y (2, 0).
+  d: d) (0, 6), (3, 0) y (2, 0).
+  e: e) (0, 6) y (3, 0).
+  solucion: d
+  pista: 'Pista: Se corta con los ejes cuando x o y valen 0 en la igualdad.'

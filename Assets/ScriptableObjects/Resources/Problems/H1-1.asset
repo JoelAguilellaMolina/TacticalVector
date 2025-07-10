@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58dc6bdf9ca86b459cf60b8e47bffcc, type: 3}
+  m_Name: H1-1
+  m_EditorClassIdentifier: 
+  enunciado: "Simplifica la siguiente expresi<size=85%>\xF3</size>n: \\r\\n 10x^7y^3
+    + 4xy^5 -9x^7y^3 + xy^5 - x^2"
+  spriteApoyo: {fileID: 21300000, guid: 250b03a2333169547b41a0e83ee56d3a, type: 3}
+  baseDamage: 35
+  maxTimeBonus: 45
+  a: "a)  x^7y^3 + 5xy^5 \u2212 x^2"
+  b: "b) 4x^7y^3 + 2xy^5 \u2212 7x^2"
+  c: "c) 2x^7y^3 + 5xy^5 \u2212 x^2"
+  d: d) -4x^7y^3 + 2xy^5 + 7x^2
+  e: "e) xy(2x^6y^2 + 5y^4 \u2212 x)"
+  solucion: a
+  pista: 'Pista: Nula...'
