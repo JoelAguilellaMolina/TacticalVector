@@ -145,6 +145,9 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - {fileID: 11400000, guid: 7f9636ef14b4b774caaf186d31da401c, type: 2}
+  - {fileID: 11400000, guid: 2da1dd5f0a09f334baf317e23efbc24c, type: 2}
+  - {fileID: -7664356727530422650, guid: ba2a32072c6e0584aa0fb54a2d865999, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -924,7 +927,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 2
+  activeInputHandler: 1
   windowsGamepadBackendHint: 0
   cloudProjectId: 711c91c4-c85b-4e46-a556-14f889119af9
   framebufferDepthMemorylessMode: 0
