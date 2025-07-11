@@ -3627,6 +3627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpcionesButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8873580381760106904, guid: 02757996f5041b34383dd0c24973d0c0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
